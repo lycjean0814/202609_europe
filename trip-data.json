@@ -11,7 +11,9 @@
       "from": "TPE",
       "to": "CDG",
       "departure": "23:30",
-      "arrival": "2026-09-26 07:55"
+      "arrival": "2026-09-26 07:55",
+      "from_terminal": "TPE Terminal 2",
+      "to_terminal": "CDG Terminal 1"
     },
     {
       "date": "2026-09-26",
@@ -19,7 +21,9 @@
       "from": "CDG",
       "to": "OPO",
       "departure": "14:00",
-      "arrival": "15:25"
+      "arrival": "15:25",
+      "from_terminal": "CDG Terminal 2F",
+      "to_terminal": "OPO（單一客運航廈）"
     },
     {
       "date": "2026-10-08",
@@ -27,7 +31,9 @@
       "from": "BCN",
       "to": "AMS",
       "departure": "15:20",
-      "arrival": "17:50"
+      "arrival": "17:50",
+      "from_terminal": "BCN Terminal 1",
+      "to_terminal": "AMS Terminal 1"
     },
     {
       "date": "2026-10-10",
@@ -36,7 +42,9 @@
       "to": "TPE",
       "departure": "21:40",
       "arrival": "2026-10-11 20:10",
-      "note": "via BKK"
+      "note": "via BKK",
+      "from_terminal": "AMS Departure Hall 3",
+      "to_terminal": "TPE Terminal 2"
     }
   ],
   "days": [
@@ -47,11 +55,12 @@
       "items": [
         [
           "23:30",
-          "✈️ BR087 台北 → 巴黎 CDG",
-          "桃園機場出發；夜航。",
+          "✈️ BR087 台北 T2 → 巴黎 CDG T1",
+          "桃園機場出發；夜航｜TPE Terminal 2 → CDG Terminal 1。",
           "transport"
         ]
-      ]
+      ],
+      "lodging": "夜宿飛機（無住宿）"
     },
     {
       "id": "d926",
@@ -66,8 +75,8 @@
         ],
         [
           "14:00",
-          "✈️ AF1528 CDG → OPO",
-          "14:00–15:25；抵達 Porto 機場。",
+          "✈️ AF1528 CDG T2F → OPO",
+          "14:00–15:25；抵達 Porto 機場｜CDG Terminal 2F → OPO。",
           "transport"
         ],
         [
@@ -124,7 +133,8 @@
           "可步行、Metro 或 Bolt/Uber，依體力決定。",
           "transport"
         ]
-      ]
+      ],
+      "lodging": "Being Porto Hostel｜訂房：婕"
     },
     {
       "id": "d927",
@@ -161,7 +171,8 @@
           "依當日體力與位置選擇。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Being Porto Hostel｜訂房：婕"
     },
     {
       "id": "d928",
@@ -204,7 +215,8 @@
           "晚餐：海鮮飯。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Varandas de Lisboa｜訂房：婕"
     },
     {
       "id": "d929",
@@ -253,7 +265,8 @@
           "回住宿休息。",
           "hotel"
         ]
-      ]
+      ],
+      "lodging": "Varandas de Lisboa｜訂房：婕"
     },
     {
       "id": "d930",
@@ -290,7 +303,8 @@
           "晚餐。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Hostellicious｜訂房：昱"
     },
     {
       "id": "d1001",
@@ -327,7 +341,8 @@
           "入住、晚餐。",
           "hotel"
         ]
-      ]
+      ],
+      "lodging": "Hotel Simon｜訂房：昱"
     },
     {
       "id": "d1002",
@@ -376,7 +391,8 @@
           "原本 19:00 會與巴士衝突，改以 20:45 場次較合理。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Hotel Inglaterra｜訂房：婕"
     },
     {
       "id": "d1003",
@@ -413,7 +429,8 @@
           "若不累再安排；Mirador de San Nicolás 已移出本日，避免趕車。",
           ""
         ]
-      ]
+      ],
+      "lodging": "Hostel Siesta & Go｜訂房：婕"
     },
     {
       "id": "d1004",
@@ -450,7 +467,8 @@
           "建議安排一次正式 Paella Valenciana。FINCA Bar de Barra 可保留作酒吧／餐飲選項。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Hotel Dimar｜訂房：昱"
     },
     {
       "id": "d1005",
@@ -487,7 +505,8 @@
           "已安排 20:45 入場。",
           ""
         ]
-      ]
+      ],
+      "lodging": "Hotel Balmoral｜訂房：婕"
     },
     {
       "id": "d1006",
@@ -536,7 +555,8 @@
           "甜點／可頌。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Hotel Balmoral｜訂房：婕"
     },
     {
       "id": "d1007",
@@ -573,7 +593,8 @@
           "不再硬塞 La Rambla、Plaça Catalunya，避免行程過滿。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "Hotel Balmoral｜訂房：婕"
     },
     {
       "id": "d1008",
@@ -594,8 +615,8 @@
         ],
         [
           "15:20",
-          "✈️ VY8306 BCN → AMS",
-          "15:20–17:50。",
+          "✈️ VY8306 BCN T1 → AMS T1",
+          "15:20–17:50｜BCN Terminal 1 → AMS Terminal 1。",
           "transport"
         ],
         [
@@ -610,7 +631,8 @@
           "入住。",
           "hotel"
         ]
-      ]
+      ],
+      "lodging": "思如家｜訂房人：未提供"
     },
     {
       "id": "d1009",
@@ -641,16 +663,17 @@
           "Amsterdam 最後完整晚餐。",
           "food"
         ]
-      ]
+      ],
+      "lodging": "思如家｜訂房人：未提供"
     },
     {
       "id": "d1010",
       "date": "10/10（六）",
-      "city": "Hilversum → Taipei",
+      "city": "Amsterdam → Taipei",
       "items": [
         [
           "上午",
-          "🌆 Hilversum 最後半日",
+          "🌆 Amsterdam 最後半日",
           "行李整理、最後採買。",
           ""
         ],
@@ -662,11 +685,12 @@
         ],
         [
           "21:40",
-          "✈️ BR076 AMS → TPE",
-          "經 BKK；隔日抵達台灣。",
+          "✈️ BR076 AMS Departure Hall 3 → TPE T2",
+          "經 BKK；隔日抵達台灣｜AMS Departure Hall 3 → TPE Terminal 2。",
           "transport"
         ]
-      ]
+      ],
+      "lodging": "思如家（退房後前往機場）｜訂房人：未提供"
     },
     {
       "id": "d1011",
@@ -679,7 +703,8 @@
           "結束 2026 西葡之旅行程。",
           "transport"
         ]
-      ]
+      ],
+      "lodging": "無住宿"
     }
   ]
 }

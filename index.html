@@ -30,7 +30,7 @@ header p{font-size:12px;margin:0;color:#d1d5db}
 .flight div{text-align:center}.flight b{font-size:18px}.flight small{display:block;color:var(--muted);font-size:11px}
 .day{background:var(--card);border-radius:var(--radius);margin:12px 0;box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:130px}
 .day-head{padding:14px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}
-.day-title{font-weight:800}.day-title span{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+.day-title{font-weight:800}.day-title span{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}.day-title .lodging{font-size:11px;color:#166534;font-weight:600;margin-top:5px}
 .badge{font-size:11px;background:#eef2ff;color:#4338ca;padding:4px 8px;border-radius:999px;white-space:nowrap}
 .timeline{padding:4px 15px 12px}
 .item{display:grid;grid-template-columns:62px 18px 1fr;gap:9px;position:relative;padding:11px 0}
@@ -73,14 +73,14 @@ footer{padding:20px 15px;text-align:center;color:var(--muted);font-size:11px}
   <h2>✈️ 行程總覽</h2>
   <p>兩人自由行・以大眾運輸為主・西班牙為主軸，葡萄牙＋Amsterdam</p>
   <div class="flight">
-    <div><b>TPE</b><small>9/25 23:30<br>BR087</small></div>
+    <div><b>TPE</b><small>9/25 23:30<br>BR087<br>T2</small></div>
     <div>→</div>
-    <div><b>CDG</b><small>9/26 07:55</small></div>
+    <div><b>CDG</b><small>9/26 07:55<br>T1</small></div>
   </div>
   <div class="flight">
-    <div><b>AMS</b><small>10/10 21:40<br>BR076 / via BKK</small></div>
+    <div><b>AMS</b><small>10/10 21:40<br>BR076 / via BKK<br>Departure Hall 3</small></div>
     <div>→</div>
-    <div><b>TPE</b><small>10/11 20:10</small></div>
+    <div><b>TPE</b><small>10/11 20:10<br>T2</small></div>
   </div>
 </section>
 
@@ -90,19 +90,129 @@ footer{padding:20px 15px;text-align:center;color:var(--muted);font-size:11px}
 <button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-let days = [];
-
-async function loadTripData(){
-  const response = await fetch("./trip-data.json", {cache:"no-store"});
-  if(!response.ok) throw new Error("trip-data.json unavailable");
-  const data=await response.json();
-  days=data.days||[];
-  renderDays();
-  initNotes();
-  initCurrentDateNavigation(data);
-}
-
-
+const days = [
+{ id:"d925", date:"9/25（五）", city:"台北 → 巴黎", items:[
+ ["23:30","✈️ BR087 台北 → 巴黎 CDG","桃園機場出發；夜航。","transport"],
+]},
+{ id:"d926", date:"9/26（六）", city:"巴黎 → Porto", items:[
+ ["07:55","✈️ 抵達巴黎 CDG","早上以休息、轉機為主，不安排巴黎市區行程。","transport"],
+ ["14:00","✈️ AF1528 CDG → OPO","14:00–15:25；抵達 Porto 機場。","transport"],
+ ["15:25","🚇 Porto 機場 → 市區","Metro E（紫線）→ Trindade，再轉 Metro D 至 São Bento；之後步行至 Being Porto Hostel。兩人也可視疲勞程度改搭 Bolt/Uber。","transport"],
+ ["16:30","🏨 Being Porto Hostel","辦理入住、放行李、稍作休息。","hotel"],
+ ["17:20","🚉 São Bento 車站","步行前往；停留約 15–20 分鐘看 azulejo 磁磚壁畫。",""],
+ ["17:45","🌊 Ribeira","步行下坡至杜羅河岸，第一次看 Porto 河岸景色。",""],
+ ["18:20","🌉 路易一世大橋上層","步行過橋到 Gaia；以步行取代搭車，保留最佳城市視角。",""],
+ ["18:40","🌅 Jardim do Morro","夕陽與 Porto 全景；建議放慢腳步，不再塞其他景點。",""],
+ ["19:30","🍽️ Gaia 河畔晚餐","優先考慮 Barris Do Douro、Tempêro D'Maria、DeCastro Gaia；也可選 Ribeira 的 Bacalhau / Muro do Bacalhau。","food"],
+ ["21:00","🌃 Gaia 河岸夜景","飯後散步；Port Wine 酒窖只看外觀，酒窖導覽留到 9/27 再決定。",""],
+ ["21:30","🚕 返回 Hostel","可步行、Metro 或 Bolt/Uber，依體力決定。","transport"]
+]},
+{ id:"d927", date:"9/27（日）", city:"Porto", items:[
+ ["09:00","📚 Livraria Lello","09:00 已購票；之後依序前往「最美 McDonald's」、Igreja do Carmo、Porto Cathedral。",""],
+ ["12:30","🍽️ 午餐＋市區散步","保留彈性，不硬塞酒窖行程。","food"],
+ ["14:00","🏛️ Porto Cathedral / 老城","視體力安排 Clérigos、Bolhão／購物與河岸散步。",""],
+ ["17:00","🍷 Port Wine 酒窖（可選）","若有興趣再安排 Gaia 酒窖導覽；不把它當必做項目。",""],
+ ["19:00","🍽️ Porto 晚餐","依當日體力與位置選擇。","food"]
+]},
+{ id:"d928", date:"9/28（一）", city:"Porto → Lisbon", items:[
+ ["09:00","🚆 前往 Campanhã","Hostel → São Bento / Campanhã；預留車站時間。","transport"],
+ ["09:40","🚆 火車 Porto → Lisboa Santa Apolónia","09:40–12:30。","transport"],
+ ["13:00","🏨 Varandas de Lisboa","寄放／入住、午餐。","hotel"],
+ ["14:00","🏘️ Alfama","老城散步。",""],
+ ["16:00","🚋 Tram 28","視排隊狀況搭乘；也可選部分路段步行。","transport"],
+ ["19:00","🍽️ Uma","晚餐：海鮮飯。","food"]
+]},
+{ id:"d929", date:"9/29（二）", city:"Sintra・Cabo da Roca", items:[
+ ["07:41","🚆 Rossio → Sintra","08:21 抵達。","transport"],
+ ["08:30","🏰 Pena Palace","建議第一站；宮殿入場需依預約時段。",""],
+ ["11:30","🌿 Quinta da Regaleira","兩者都需要步行與爬坡；預留充分時間。",""],
+ ["14:30","🚌 前往 Cabo da Roca","若時間允許搭 1253；若前面延誤，優先保留 Cabo da Roca，Moorish Castle 本日不安排。","transport"],
+ ["16:00","🌊 Cabo da Roca","歐洲大陸西端海岸景觀。",""],
+ ["17:00","🚌 Cabo da Roca → Cascais","1624 → Cascais，再搭火車回 Cais do Sodré。","transport"],
+ ["19:00","🏨 Lisbon","回住宿休息。","hotel"]
+]},
+{ id:"d930", date:"9/30（三）", city:"Lisbon → Lagos", items:[
+ ["09:30","🏛️ Belém","Belém Tower → Monument to the Discoveries → Jerónimos Monastery。",""],
+ ["11:30","🥧 Casa Pastéis de Belém","葡式蛋撻。","food"],
+ ["12:30","🚌 Lisbon → Lagos","Rede Expressos 12:30–16:10。","transport"],
+ ["16:30","🏨 Hostellicious","入住／放行李。","hotel"],
+ ["19:00","🍽️ O Perceve","晚餐。","food"]
+]},
+{ id:"d1001", date:"10/1（四）", city:"Lagos → Seville", items:[
+ ["09:00","⛵ Benagil Caves","預訂船班；依當日海況調整。",""],
+ ["11:00","🏖️ Praia da Marinha","海岸景觀。",""],
+ ["12:30","🌊 Ponta da Piedade","步道／海岸景觀；留意時間。",""],
+ ["14:05","🚌 Lagos → Seville","FlixBus 14:05–19:25。","transport"],
+ ["19:45","🏨 Hotel Simon","入住、晚餐。","hotel"]
+]},
+{ id:"d1002", date:"10/2（五）", city:"Seville → Granada", items:[
+ ["11:00","⛪ Seville Cathedral & Giralda","2026/9/1 起週五售票 11:00 開始；預留約 75 分鐘。",""],
+ ["12:30","🏰 Real Alcázar","預留約 1.5–2 小時。",""],
+ ["14:30","🇪🇸 Plaza de España","拍照、散步。",""],
+ ["15:00","🍄 Metropol Parasol","視時間決定是否停留。",""],
+ ["15:45","🚌 Seville → Granada","巴士約 15:45–18:45。","transport"],
+ ["19:00","🏨 Hotel Inglaterra","入住／放行李。","hotel"],
+ ["20:45","💃 Tablao La Alborea","原本 19:00 會與巴士衝突，改以 20:45 場次較合理。","food"]
+]},
+{ id:"d1003", date:"10/3（六）", city:"Granada → Madrid", items:[
+ ["09:30","🏰 Alhambra","Nasrid Palaces 固定入場時段；建議完整保留約 3.5–4 小時，含 Alcazaba、Generalife。",""],
+ ["13:30","🍽️ Granada 午餐","簡單用餐後前往車站。","food"],
+ ["14:59","🚆 AVE 02167 Granada → Madrid","14:59–18:39，Madrid Puerta de Atocha。","transport"],
+ ["19:00","🏨 Hostel Siesta & Go","入住。","hotel"],
+ ["20:00","🌆 Madrid 晚間散步（可選）","若不累再安排；Mirador de San Nicolás 已移出本日，避免趕車。",""]
+]},
+{ id:"d1004", date:"10/4（日）", city:"Madrid → Valencia", items:[
+ ["09:00","👑 Royal Palace","早上參觀。",""],
+ ["11:30","🌳 Retiro Park","散步／野餐。",""],
+ ["15:15","🚆 iryo 06142 Madrid-Chamartín → Valencia","15:15–17:09。","transport"],
+ ["17:30","🏨 Hotel Dimar","入住。","hotel"],
+ ["19:00","🍽️ Valencia 晚餐","建議安排一次正式 Paella Valenciana。FINCA Bar de Barra 可保留作酒吧／餐飲選項。","food"]
+]},
+{ id:"d1005", date:"10/5（一）", city:"Valencia → Barcelona", items:[
+ ["09:00","🏙️ City of Arts and Sciences","早上參觀外觀／園區。",""],
+ ["12:00","🏖️ Malvarrosa Beach","海邊散步、午餐。",""],
+ ["15:02","🚆 EUROMED 01152 Valencia-Nord → Barcelona-Sants","15:02–18:19。","transport"],
+ ["19:00","🏨 Hotel Balmoral","入住。","hotel"],
+ ["20:45","🏛️ Casa Batlló","已安排 20:45 入場。",""]
+]},
+{ id:"d1006", date:"10/6（二）", city:"Barcelona", items:[
+ ["09:15","⛪ Sagrada Família","09:15 Basilica；10:00 Nativity Tower。",""],
+ ["12:00","🍽️ 午餐","保留緩衝。","food"],
+ ["13:30","🏛️ Casa Milà","原本 09:00 與 Sagrada Família 衝突，改至午後。",""],
+ ["14:30","⛪ Barcelona Cathedral","若與 Casa Milà 時間重疊，以已預約票券為優先；其餘景點彈性調整。",""],
+ ["16:30","🎼 Palau de la Música Catalana","預約參觀。",""],
+ ["18:00","🗿 Columbus Monument","視體力安排。",""],
+ ["18:30","🥐 Brunells","甜點／可頌。","food"]
+]},
+{ id:"d1007", date:"10/7（三）", city:"Montserrat", items:[
+ ["08:00","🚆 Barcelona → Montserrat","以火車＋登山齒軌／纜車方式前往，依當日交通選擇。","transport"],
+ ["09:30","⛰️ Montserrat","修道院＋山區步道。",""],
+ ["10:30","🥾 Sant Jeroni（可選）","體力許可再走；本日定位為自然／健行日。",""],
+ ["16:00","🚆 返回 Barcelona","保留交通緩衝。","transport"],
+ ["19:00","🍽️ Barcelona 晚餐","不再硬塞 La Rambla、Plaça Catalunya，避免行程過滿。","food"]
+]},
+{ id:"d1008", date:"10/8（四）", city:"Barcelona → Amsterdam", items:[
+ ["09:00","🌆 Barcelona 最後半日","依前幾日未完成項目補逛；保留行李與機場時間。",""],
+ ["12:30","✈️ 前往 BCN 機場","建議提早抵達。","transport"],
+ ["15:20","✈️ VY8306 BCN → AMS","15:20–17:50。","transport"],
+ ["18:30","🚆 Schiphol → Hilversum","約 30 分鐘。","transport"],
+ ["19:30","🏨 思如家","入住。","hotel"]
+]},
+{ id:"d1009", date:"10/9（五）", city:"Amsterdam", items:[
+ ["09:00","🚲 Amsterdam 城市＋單車","全天市區探索；以單車／大眾運輸為主。","transport"],
+ ["12:30","🍽️ 午餐","自由安排。","food"],
+ ["14:00","🌆 市區散步","運河、街區、主要景點；保留與同學會面的時間。",""],
+ ["19:00","🍽️ 晚餐","Amsterdam 最後完整晚餐。","food"]
+]},
+{ id:"d1010", date:"10/10（六）", city:"Amsterdam → Taipei", items:[
+ ["上午","🌆 Amsterdam 最後半日","行李整理、最後採買。",""],
+ ["18:00","🚆 前往 Schiphol","建議預留足夠機場時間。","transport"],
+ ["21:40","✈️ BR076 AMS → TPE","經 BKK；隔日抵達台灣。","transport"]
+]},
+{ id:"d1011", date:"10/11（日）", city:"抵達台灣", items:[
+ ["20:10","✈️ 抵達台北","結束 2026 西葡之旅行程。","transport"]
+]}
+];
 
 const maps = {
  "Being Porto Hostel":"https://www.google.com/maps/search/?api=1&query=Being+Porto+Hostel+Rua+de+Belomonte+13+Porto",
@@ -176,56 +286,41 @@ function tag(type){
   return '';
 }
 
-function renderDays(){
-  const root=document.getElementById("days");
-  root.innerHTML="";
-  days.forEach(d=>{
-    const section=document.createElement("section");
-    section.className="day"; section.id=d.id;
-    section.innerHTML=`<div class="day-head"><div class="day-title">${d.date}<span>${d.city}</span></div><span class="badge">${d.items.length} 個行程</span></div><div class="timeline"></div><div class="notes"><label>📝 今日筆記<textarea data-note="${d.id}" placeholder="輸入今日心得、實際花費、餐廳、交通或臨時變更……"></textarea></label></div>`;
-    const tl=section.querySelector(".timeline");
-    d.items.forEach(([time,title,desc,type])=>{
-      const div=document.createElement("div"); div.className="item";
-      const mapKey=Object.keys(maps).find(k=>title.includes(k));
-      const linkedTitle=mapKey ? title.replace(mapKey,`<a href="${maps[mapKey]}" target="_blank" rel="noopener">${mapKey} ↗</a>`) : title;
-      div.innerHTML=`<div class="time">${time}</div><div class="dot"></div><div class="content"><h3>${linkedTitle}</h3><p>${linkify(desc)}</p>${tag(type)}</div>`;
-      tl.appendChild(div);
-    });
-    root.appendChild(section);
+const root=document.getElementById("days");
+days.forEach(d=>{
+  const section=document.createElement("section");
+  section.className="day"; section.id=d.id;
+  section.innerHTML=`<div class="day-head"><div class="day-title">${d.date}<span>${d.city}</span>${d.lodging ? `<span class="lodging">🏨 ${d.lodging}</span>` : ""}</div><span class="badge">${d.items.length} 個行程</span></div><div class="timeline"></div><div class="notes"><label>📝 今日筆記<textarea data-note="${d.id}" placeholder="輸入今日心得、實際花費、餐廳、交通或臨時變更……"></textarea></label></div>`;
+  const tl=section.querySelector(".timeline");
+  d.items.forEach(([time,title,desc,type],i)=>{
+    const div=document.createElement("div"); div.className="item";
+    const mapKey = Object.keys(maps).find(k => title.includes(k)); const linkedTitle = mapKey ? title.replace(mapKey, `<a href="${maps[mapKey]}" target="_blank" rel="noopener">${mapKey} ↗</a>`) : title; div.innerHTML=`<div class="time">${time}</div><div class="dot"></div><div class="content"><h3>${linkedTitle}</h3><p>${linkify(desc)}</p>${tag(type)}</div>`;
+    tl.appendChild(div);
   });
-}
-function initNotes(){
-  document.querySelectorAll("textarea[data-note]").forEach(area=>{
-    const key="trip-note-"+area.dataset.note;
-    area.value=localStorage.getItem(key)||"";
-    area.addEventListener("input",()=>localStorage.setItem(key,area.value));
-  });
-}
-function initCurrentDateNavigation(data){
-  const now=new Date(), start=new Date(data.trip_start+"T00:00:00+08:00"), end=new Date(data.trip_end+"T23:59:59+08:00");
-  let id=days[0]?.id;
-  if(now>=start&&now<=end){
-    const p=new Intl.DateTimeFormat("en-CA",{timeZone:data.timezone,year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(now);
-    const y=p.find(x=>x.type==="year").value, mo=+p.find(x=>x.type==="month").value, da=+p.find(x=>x.type==="day").value;
-    const d=days.find(x=>x.date.startsWith(`${mo}/${da}`));
-    if(d) id=d.id;
-  } else if(now>end&&days.length) id=days[days.length-1].id;
-  setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"}),250);
-}
+  root.appendChild(section);
+});
+
+document.querySelectorAll("textarea[data-note]").forEach(area=>{
+  const key="trip-note-"+area.dataset.note;
+  area.value=localStorage.getItem(key) || "";
+  area.addEventListener("input",()=>localStorage.setItem(key,area.value));
+});
+
+const now=new Date(); const startDate=new Date("2026-09-25T00:00:00+08:00"); const endDate=new Date("2026-10-11T23:59:59+08:00"); let currentId="d925"; if(now>=startDate&&now<=endDate){ const ids=["d925","d926","d927","d928","d929","d930","d1001","d1002","d1003","d1004","d1005","d1006","d1007","d1008","d1009","d1010","d1011"]; const dates=[25,26,27,28,29,30,1,2,3,4,5,6,7,8,9,10,11]; const m=now.getMonth()+1, day=now.getDate(); const idx=(m===9?day-25:6+day); currentId=ids[Math.max(0,Math.min(ids.length-1,idx))]; } else if(now>endDate) currentId="d1011"; setTimeout(()=>document.getElementById(currentId)?.scrollIntoView({behavior:"smooth",block:"start"}),250);
 const navLinks=[...document.querySelectorAll(".nav a")];
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
-    if(e.isIntersecting) navLinks.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id));
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id));
+    }
   });
 },{rootMargin:"-140px 0px -65% 0px"});
-async function boot(){
-  try{await loadTripData(); days.forEach(d=>observer.observe(document.getElementById(d.id)));}
-  catch(err){document.getElementById("days").innerHTML='<div class="summary"><h2>⚠️ 行程資料載入失敗</h2><p>請確認 trip-data.json 已與 index.html 放在同一目錄。</p></div>';}
-}
-boot();
+days.forEach(d=>observer.observe(document.getElementById(d.id)));
 </script>
 <script>
-if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
 </script>
 </body>
 </html>
